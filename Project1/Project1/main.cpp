@@ -1,8 +1,9 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
 int N = 30, M = 20;
-int size = 20;
+int size = 16;
 int w = size * N;
 int h = size * M;
 
@@ -21,9 +22,22 @@ int main() {
     Sprite sprite1(t1);
     Sprite sprite2(t2);
 
+    window.setFramerateLimit(60);
+
+    Clock clock;
     //main loop
     while (window.isOpen())
     {
+        
+        float currentTime = clock.restart().asSeconds();
+        float fps = 1.0f / (currentTime);
+
+        
+
+        std::cout << "fps: " << fps << std::endl;
+        
+        
+
         //create a simple type of event to capture the window.close()
         Event e;
         while (window.pollEvent(e))
@@ -39,8 +53,9 @@ int main() {
             {
                 sprite1.setPosition(i * size, j * size);  window.draw(sprite1);
             }
-            window.display();
+            
         }
+        window.display();
     }
     return 0;
 }
