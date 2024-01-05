@@ -7,6 +7,8 @@ int size = 16;
 int w = size * N;
 int h = size * M;
 
+void displayFrameRate();
+
 int main() {
 
     //create a window variable
@@ -24,21 +26,9 @@ int main() {
 
     window.setFramerateLimit(60);
 
-    Clock clock;
     //main loop
     while (window.isOpen())
     {
-        
-        float currentTime = clock.restart().asSeconds();
-        float fps = 1.0f / (currentTime);
-
-        
-
-        std::cout << "fps: " << fps << std::endl;
-        
-        
-
-        //create a simple type of event to capture the window.close()
         Event e;
         while (window.pollEvent(e))
         {
@@ -48,13 +38,16 @@ int main() {
 
         window.clear();
 
-        for (int i = 0; i < N; i++) {
+        //set up background
+        for (int i = 0; i < N; i++) 
+        {
             for (int j = 0; j < M; j++)
             {
                 sprite1.setPosition(i * size, j * size);  window.draw(sprite1);
             }
             
         }
+
         window.display();
     }
     return 0;
