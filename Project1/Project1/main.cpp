@@ -25,7 +25,7 @@ struct Snake
 struct fruit
 {
     int x, y;
-} f1,f2;
+} f1;
 
 //function to update the snake's position
 //handles collision detection with the 
@@ -58,13 +58,17 @@ void Tick()
         f1.y = rand() % M;
     }
 
-    //check for collission of the head with the fruit2
-    if ((s[0].x == f2.x) && s[0].y == f2.y)
+    //create boundary effect
+    if (s[0].x > N) s[0].x = 0; if (s[0].x < 0) s[0].x = N;
+    if (s[0].y > M) s[0].y = 0; if (s[0].y < 0) s[0].y = M;
+
+    //create running into own body effect
+    for (int i = 1; i < num; i++)
     {
-        num++;
-        f2.x = rand() % N;
-        f2.y = rand() % M;
+        if (s[0].x == s[i].x && s[0].y == s[i].y)
+            num = i;
     }
+
 }
 
 int main() {
@@ -83,7 +87,6 @@ int main() {
     //create a sprite w/ the texture of t1/t2
     Sprite sprite1(t1);
     Sprite sprite2(t2);  
-    Sprite sprite3(t2);
 
     //create a clock for fps
     Clock clock;
@@ -94,10 +97,6 @@ int main() {
     //place fruit1
     f1.x = 10;
     f1.y = 10;
-
-    //place fruit2
-    f2.x = 20;
-    f2.y = 20;
 
     //main game loop
     while (window.isOpen())
@@ -155,10 +154,6 @@ int main() {
 
         //set up fruit1
         sprite2.setPosition(f1.x * size, f1.y * size);
-        window.draw(sprite2);
-
-        //set up fruit2
-        sprite3.setPosition(f2.x * size, f2.y * size);
         window.draw(sprite2);
 
         window.display();
